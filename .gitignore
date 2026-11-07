@@ -1,0 +1,21 @@
+# Icarus Verilog & GTKWave simulation artifacts
+*.vvp
+*.vcd
+*.fst
+*.lxt
+
+# Yosys temporary netlists
+*.json
+
+# Xilinx Vivado build directories & logs
+*.jou
+*.log
+*.str
+*.bit
+.Xil/
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.srcs/
