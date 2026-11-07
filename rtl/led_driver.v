@@ -1,16 +1,35 @@
 `timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: IIT ISM DHANBAD
+// Engineer: SINCHAN BANERJEE
+// 
+// Create Date: 26.10.2026 11:07:05
+// Design Name: LED CONTROL BRIGHTNESS AND COLOUR AND MODE
+// Module Name: led_driver
+// Project Name: VOICE CONTROLLED LED BLINKING SYSTEM
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
 
-module led_driver #(
-    parameter BLINK_MAX = 25'd24_999_999 // 0.25s half-period at 100 MHz (2 Hz blink)
-)(
+
+module led_driver (
     input  wire       clk,          // 100 MHz system clock
     input  wire       rst,          // System reset
     input  wire [2:0] active_color, // From FSM: [2]=Red, [1]=Green, [0]=Blue
-    input  wire       blink_en,     // From FSM: 1=2Hz Blink, 0=Steady
+    input  wire       blink_en,     // From FSM: 1 = 2Hz Blink, 0 = Steady
     input  wire [1:0] dim_level,    // From FSM: 00=100%, 01=50%, 10=25%, 11=12.5%
     output wire [2:0] led_out       // Physical FPGA LED pins
 );
 
+    // 1. 2Hz Blink Generator (25,000,000 cycles per half-period at 100 MHz)
     reg [24:0] blink_counter;
     reg        blink_wave;
 
@@ -18,7 +37,7 @@ module led_driver #(
         if (rst) begin
             blink_counter <= 25'd0;
             blink_wave    <= 1'b0;
-        end else if (blink_counter == BLINK_MAX) begin
+        end else if (blink_counter == 25'd24_999_999) begin
             blink_counter <= 25'd0;
             blink_wave    <= ~blink_wave;
         end else begin
@@ -26,26 +45,34 @@ module led_driver #(
         end
     end
 
+    // 2. High-Speed PWM Counter (390.6 kHz free-running sawtooth)
     reg [7:0] pwm_counter;
+
     always @(posedge clk) begin
-        if (rst) pwm_counter <= 8'd0;
-        else     pwm_counter <= pwm_counter + 8'd1;
+        if (rst)
+            pwm_counter <= 8'd0;
+        else
+            pwm_counter <= pwm_counter + 8'd1;
     end
 
+    // 3. 4-Level Brightness MUX (Zero-Comparator MSB Logic)
     reg pwm_mask;
+
     always @(*) begin
         case (dim_level)
-            2'b00:   pwm_mask = 1'b1;                                               // 100%
-            2'b01:   pwm_mask = ~pwm_counter[7];                                    // 50%
-            2'b10:   pwm_mask = ~(pwm_counter[7] | pwm_counter[6]);                 // 25%
-            2'b11:   pwm_mask = ~(pwm_counter[7] | pwm_counter[6] | pwm_counter[5]);// 12.5%
+            2'b00:   pwm_mask = 1'b1;                                         // 100% duty cycle
+            2'b01:   pwm_mask = ~pwm_counter[7];                              // 50% duty cycle
+            2'b10:   pwm_mask = ~(pwm_counter[7] | pwm_counter[6]);           // 25% duty cycle
+            2'b11:   pwm_mask = ~(pwm_counter[7] | pwm_counter[6] | pwm_counter[5]); // 12.5% duty cycle
             default: pwm_mask = 1'b1;
         endcase
     end
 
+    // 4. Master Masking & Replication Logic
     wire blink_mask    = blink_wave | ~blink_en;
     wire master_enable = pwm_mask & blink_mask;
 
+    // Replicate 1-bit master_enable 3 times to bitwise-AND with 3-bit active_color
     assign led_out = active_color & {3{master_enable}};
 
 endmodule
