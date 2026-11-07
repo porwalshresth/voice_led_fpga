@@ -36,7 +36,7 @@ A complete, synthesizable Verilog-2001 RTL implementation of an offline voice-co
 
 The self-checking testbench (`tb/tb_top_voice_led.v`) transmits true 9600-baud 8N1 serial frames and verifies **15 automated assertions** covering all 7 voice commands, all 4 PWM duty cycles (`256/256`, `128/256`, `64/256`, `32/256`), and 3 protocol hazard injection tests (corrupted frame end `0xFF`, `0x0A` payload data collision, and mid-packet cut-off `0xAA` resynchronization).
 
-![GTKWave Simulation Waveform](docs/waveforms/gtkwave_full_sim.png)
+![GTKWave Simulation Waveform](docs/waveforms/gtkwave_full_sim.pdf)
 
 ### Quickstart Commands
 
