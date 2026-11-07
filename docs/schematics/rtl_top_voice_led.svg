@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:s="https://github.com/nturley/netlistsvg" width="1064" height="325">
+<rect id="white-background" width="100%" height="100%" fill="#ffffff"/>
   <style>svg {
     stroke:#000;
     fill:none;
@@ -19,43 +20,43 @@
   .splitjoinBody {
     fill:#000;
   }</style>
-  <g s:type="dff" transform="translate(183,135)" s:width="30" s:height="40" id="cell_$procdff$450">
+  <g s:type="dff" transform="translate(183,135)" s:width="30" s:height="40" id="cell_$procdff$463">
     <s:alias val="$dff"/>
     <s:alias val="$_DFF_"/>
     <s:alias val="$_DFF_P_"/>
-    <rect width="30" height="40" x="0" y="0" class="cell_$procdff$450"/>
-    <path d="M0,35 L5,30 L0,25" class="cell_$procdff$450"/>
+    <rect width="30" height="40" x="0" y="0" class="cell_$procdff$463"/>
+    <path d="M0,35 L5,30 L0,25" class="cell_$procdff$463"/>
     <g s:x="30" s:y="10" s:pid="Q"/>
     <g s:x="0" s:y="30" s:pid="CLK"/>
     <g s:x="0" s:y="30" s:pid="C"/>
     <g s:x="0" s:y="10" s:pid="D"/>
   </g>
-  <g s:type="dff" transform="translate(328.3333333333333,145)" s:width="30" s:height="40" id="cell_$procdff$451">
+  <g s:type="dff" transform="translate(328.3333333333333,145)" s:width="30" s:height="40" id="cell_$procdff$464">
     <s:alias val="$dff"/>
     <s:alias val="$_DFF_"/>
     <s:alias val="$_DFF_P_"/>
-    <rect width="30" height="40" x="0" y="0" class="cell_$procdff$451"/>
-    <path d="M0,35 L5,30 L0,25" class="cell_$procdff$451"/>
+    <rect width="30" height="40" x="0" y="0" class="cell_$procdff$464"/>
+    <path d="M0,35 L5,30 L0,25" class="cell_$procdff$464"/>
     <g s:x="30" s:y="10" s:pid="Q"/>
     <g s:x="0" s:y="30" s:pid="CLK"/>
     <g s:x="0" s:y="30" s:pid="C"/>
     <g s:x="0" s:y="10" s:pid="D"/>
   </g>
-  <g s:type="mux" transform="translate(248,135)" s:width="20" s:height="40" id="cell_$procmux$432">
+  <g s:type="mux" transform="translate(248,135)" s:width="20" s:height="40" id="cell_$procmux$305">
     <s:alias val="$pmux"/>
     <s:alias val="$mux"/>
     <s:alias val="$_MUX_"/>
-    <path d="M0,0 L20,10 L20,30 L0,40 Z" class="cell_$procmux$432"/>
+    <path d="M0,0 L20,10 L20,30 L0,40 Z" class="cell_$procmux$305"/>
     <g s:x="0" s:y="10" s:pid="A"/>
     <g s:x="0" s:y="30" s:pid="B"/>
     <g s:x="10" s:y="35" s:pid="S"/>
     <g s:x="20" s:y="20" s:pid="Y"/>
   </g>
-  <g s:type="mux" transform="translate(116.33333333333333,125)" s:width="20" s:height="40" id="cell_$procmux$435">
+  <g s:type="mux" transform="translate(116.33333333333333,125)" s:width="20" s:height="40" id="cell_$procmux$308">
     <s:alias val="$pmux"/>
     <s:alias val="$mux"/>
     <s:alias val="$_MUX_"/>
-    <path d="M0,0 L20,10 L20,30 L0,40 Z" class="cell_$procmux$435"/>
+    <path d="M0,0 L20,10 L20,30 L0,40 Z" class="cell_$procmux$308"/>
     <g s:x="0" s:y="10" s:pid="A"/>
     <g s:x="0" s:y="30" s:pid="B"/>
     <g s:x="10" s:y="35" s:pid="S"/>
