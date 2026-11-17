@@ -4,6 +4,25 @@ A complete, synthesizable Verilog-2001 RTL implementation of an offline voice-co
 
 ---
 
+## Repository Structure
+
+```text
+├── ElechouseV3Module_Training/ # Serial interface scripts for V3 offline voice training
+├── constraints/                # Xilinx Artix-7 (Basys 3) physical pin mappings (.xdc)
+├── docs/                       # Hardware reference manuals, SVG schematics, and waveforms
+├── rtl/                        # Synthesizable Verilog-2001 hardware modules
+│   ├── top_voice_led.v         # Top-level motherboard wrapper & 2-FF CDC synchronizer
+│   ├── baud_gen.v              # Modulo-651 16x oversampling baud tick generator
+│   ├── uart_rx.v               # 8N1 UART receiver FSM
+│   ├── packet_fsm.v            # 9-byte Elechouse V3 protocol parser & command latch
+│   └── led_driver.v            # 2 Hz blink & 390.6 kHz 4-level LUT6 PWM engine
+├── tb/                         # Verification testbenches
+│   └── tb_top_voice_led.v      # Self-checking testbench covering all 11 test cases
+├── .gitignore                  # Ignores large waveform dumps (.vcd, .fst) and Vivado logs
+├── Makefile                    # One-command simulation & RTL SVG diagram generation
+└── README.md                   # Project overview and architecture documentation
+```
+
 ## System Architecture & Data Flow
 
 1. **Acoustic Capture (Elechouse V3):** Recognizes 7 trained spoken commands offline and transmits deterministic 9-byte hexadecimal frames (`AA 07 0D 00 FF [R] [RI] 00 0A`) over 9600-baud 8N1 UART.
