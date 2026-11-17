@@ -23,11 +23,11 @@ A complete, synthesizable Verilog-2001 RTL implementation of an offline voice-co
 | Record ID | Spoken Command | `active_color[2:0]` | `blink_en` | `dim_level[1:0]` |
 | :---: | :---: | :---: | :---: | :---: |
 | `8'h00` | **"Red"** | `3'b100` (Red ON) | Unchanged | Unchanged |
-| `8'h01` | **"Green"** | `3'b010` (Green ON) | Unchanged | Unchanged |
+| `8'h01` | **"White"** | `3'b010` (Green ON) | Unchanged | Unchanged |
 | `8'h02` | **"Blue"** | `3'b001` (Blue ON) | Unchanged | Unchanged |
 | `8'h03` | **"All"** | `3'b111` (All 3 ON) | Unchanged | Unchanged |
 | `8'h04` | **"Blink"** | Unchanged | `~blink_en` (Toggles 2 Hz) | Unchanged |
-| `8'h05` | **"Dim"** | Unchanged | Unchanged | `dim_level + 1` (100% / 50% / 25% / 12.5%) |
+| `8'h05` | **"Low"** | Unchanged | Unchanged | `dim_level + 1` (100% / 50% / 25% / 12.5%) |
 | `8'h06` | **"Clear"** | `3'b000` (All OFF) | `1'b0` (Steady) | `2'b00` (100%) |
 
 ---
