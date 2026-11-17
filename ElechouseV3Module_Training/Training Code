@@ -1,0 +1,98 @@
+#include <SoftwareSerial.h>
+#include <stdlib.h>
+#include <string.h>
+
+SoftwareSerial voice(10, 11); // RX, TX
+
+String inputLine = "";
+
+void setup() {
+    Serial.begin(115200); // Laptop communication
+    voice.begin(9600);    // Elechouse communication
+
+    Serial.println("Elechouse V3 Serial Interface Ready");
+    Serial.println("Enter HEX commands separated by spaces.");
+}
+
+void loop() {
+
+    // Receive commands from Serial Monitor
+    while (Serial.available()) {
+
+        char c = Serial.read();
+
+        if (c == '\n') {
+            inputLine.trim();
+
+            if (inputLine.length() > 0) {
+                sendHex(inputLine);
+            }
+
+            inputLine = "";
+        }
+        else if (c != '\r') {
+            if (inputLine.length() < 100) {
+                inputLine += c;
+            }
+        }
+    }
+
+    // Receive responses from Elechouse
+    while (voice.available()) {
+
+        byte b = voice.read();
+
+        if (b < 0x10) {
+            Serial.print('0');
+        }
+
+        Serial.print(b, HEX);
+        Serial.print(' ');
+
+        if (b == 0x0A) {
+            Serial.println();
+        }
+    }
+}
+
+void sendHex(String line) {
+
+    char buffer[120];
+    line.toCharArray(buffer, sizeof(buffer));
+
+    byte data[40];
+    int count = 0;
+
+    char *token = strtok(buffer, " ,\t");
+
+    while (token != NULL) {
+
+        char *endPtr;
+        long value = strtol(token, &endPtr, 16);
+
+        if (*endPtr != '\0' || value < 0 ||
+            value > 255 || count >= 40) {
+
+            Serial.println("Invalid HEX command.");
+            return;
+        }
+
+        data[count++] = (byte)value;
+        token = strtok(NULL, " ,\t");
+    }
+
+    if (count == 0) return;
+
+    Serial.print("TX: ");
+
+    for (int i = 0; i < count; i++) {
+        if (data[i] < 0x10) Serial.print('0');
+
+        Serial.print(data[i], HEX);
+        Serial.print(' ');
+    }
+
+    Serial.println();
+
+    voice.write(data, count);
+}
